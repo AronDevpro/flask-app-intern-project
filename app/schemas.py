@@ -40,8 +40,9 @@ class SupplierSchema(ma.Schema):
 
 class OrderSchema(ma.Schema):
     orderItems = ma.Nested('OrderItemSchema', many=True)
+
     class Meta:
-        fields = ('orderId', 'customer_id', 'orderDate', 'totalAmount', 'orderItems')
+        fields = ('orderId', 'customerId', 'orderDate', 'totalAmount', 'orderItems')
         model = Order
         include_relationships = True
         load_instance = True

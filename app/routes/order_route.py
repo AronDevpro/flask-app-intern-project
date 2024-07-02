@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from flask import jsonify, request
 
 from app import app, db
@@ -26,7 +28,7 @@ def create_order():
 
     order = Order(
         customerId=data['customerId'],
-        orderDate=data['orderDate'],
+        orderDate=datetime.now().date(),
         totalAmount=total_amount
     )
     db.session.add(order)
@@ -46,8 +48,10 @@ def fetch_order():
     for order in data:
         order_dict = {
             'orderId': order.orderId,
+            'customerId': order.customerId,
             'orderDate': order.orderDate,
             'totalAmount': order.totalAmount,
+            'status': order.status,
             'orderItems': [OrderItemSchema().dump(orderItem) for orderItem in order.orderItems]
         }
         orders_data.append(order_dict)
